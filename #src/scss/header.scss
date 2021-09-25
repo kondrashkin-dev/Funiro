@@ -1,0 +1,565 @@
+//====================================================================================================
+.header {
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	min-height: 40px;
+	@media (max-width:$md3+px){
+		min-height: 5px;
+	}
+	&._scroll{
+		.header__wrapper{
+			background: rgba(255, 255, 255, 0.8);
+		}
+		@media (any-hover: hover){
+			&:hover{
+				background: rgba(255, 255, 255, 0.9);
+			}
+		}
+		.header__body{
+			min-height: 50px;
+			@media (min-width:$md2+px){
+				min-height: 70px;
+			}
+		}
+	}
+		&__wrapper {
+			position: fixed;
+			width: 100%;
+			left: 0;
+			top: 0;
+			z-index: 50;
+			transition: all 0.3s ease 0s;
+		}
+
+		&__container {
+		}
+
+		&__body {
+			display: flex;
+			align-items: center;
+			min-height: 125px;
+			padding: 5px 0;//навсякий случай
+			position: relative;
+			transition: min-height 0.3s ease 0s;
+			@media (max-width:$md2+px){
+				min-height: 80px;
+			}
+			@media (max-width:$md3+px){
+				min-height: 50px;
+			}
+		}
+
+		&__main {
+			flex: 0 0 494 / 1240 * 100%; //задаём процентное соотношение для адаптива(делим ширину на ширину ограничивающего контейнера и выражаем всё в процентах)
+			display: flex;
+			align-items: center;
+			@media (max-width:$md2+px){
+				flex: 1 1 auto;
+			}
+		}
+
+		&__logo {
+			position: relative;
+			z-index: 5
+		}
+
+		&__menu {
+		}
+
+		&__search {
+			@include adaptiv-value("padding-right", 32, 15, 1);
+			//**mobile first, т.к мы потом скроем форму в значок
+			@media (min-width:$md2+px){
+				flex: 1 1 auto;
+			}
+		}
+
+		&__actions {
+		}
+}
+
+.menu {
+	flex: 0 1 420px;
+		//!эта обёртка нужна, чтобы в ней показывалось содержимое меню на мобилках
+		&__body {
+			//!по сути готовый css для открытых бургеров
+			@media (max-width:$md3+px){
+				position: fixed;
+				width: 100%;
+				height: 100%;
+				overflow: auto; //чтобы спокойно прокручивалось меню
+				top: 0;
+				left: -100%;
+				background: #fcf8f3;
+				transition: left 0.3s ease 0s;
+				padding: 70px 15px 30px 15px;
+				//!Готовая прокладка для того, чтобы контент меню заходил за хедер
+				&::before{
+					content: '';
+					position: fixed;
+					width: 100%;
+					height: 50px;
+					top: 0;
+					left: -100%;
+					background: #fcf8f3;
+					transition: left 0.3s ease 0s;
+					z-index: 2;
+				}
+				&._active{
+					left: 0;
+					&::before{
+						left: 0;
+					}
+				}
+			}
+		}
+
+		&__list {
+			//mobile first, так как после 768px меню спрячется в бургер
+			@media (min-width:$md3+px){
+				display: flex;
+				flex-wrap: wrap; //чтобы нормально всё отображалось, если пункты не будут умещаться
+				justify-content: space-evenly;
+			}
+		}
+
+		&__item {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;//при маленькой ширине, чтобы стрелки были в конце строки с пунктом меню
+			flex-wrap: wrap;//при маленькой ширине подменю будет на другую строку переходить
+			margin: 0 3px;//чтобы ничего не прилепало слева справа при слишком маленькой ширине
+			padding: 5px 0px;//чтобы были отступы дргуг от друга сверху и снизу, когда не будут умещаться все вместе
+			position: relative;//чтобы спозиционировать подменю
+			@media (any-hover: hover){
+				&:hover{
+					//!не забывай, что мы можем обращаться ко всем элементам внутри и задавать им стили
+					.menu__sublist{
+						transform: translate(0,0);
+						opacity: 1;
+						visibility: visible;
+						pointer-events: auto;//чтобы нельзя была навести  на квадрат подменю после его появления
+					}
+					.menu__arrow{
+						transform: rotate(90deg);
+					}
+					.menu__arrow, .menu__link{
+						color: $orangeColor;
+					}
+				}
+			}
+			@media (min-width:$md3+px){
+				&._hover{//!сам к себе через & обращаешься, не забывай
+					.menu__sublist{
+						transform: translate(0,0);
+						opacity: 1;
+						visibility: visible;
+						pointer-events: auto;//чтобы нельзя была навести  на квадрат подменю после его появления
+					}
+					.menu__arrow{
+						transform: rotate(90deg);
+					}
+					.menu__arrow, .menu__link{
+						color: $orangeColor;
+					}
+				}
+			}
+			@media (max-width:$md3+px){
+				margin: 0px 0px 15px 0px;
+				&:last-child{
+					margin-bottom: 0;
+				}
+			}
+		}
+
+		&__link {
+			font-weight: 500;
+			color: inherit;
+			transition: color 0.3s ease 0s; //добавляем сразу, т.к заранее знаем, что захотим анимировать
+			@media (max-width:$md3+px){
+				font-size: 24px;
+				font-weight: 600;
+			}
+		}
+
+		&__arrow {
+			transform: rotate(-90deg);
+			margin: 0px 0px 0px 8px;
+			transition: all 0.3s ease 0s;//сразу хотим чтобы стрелочка переворачивалась
+			font-size: 14px;
+			@media (max-width:$md3+px){
+				font-size: 18px;
+				&._active{
+					color: $orangeColor;
+					transform: rotate(90deg);
+				}
+			}
+		}
+
+		&__sublist {
+			position: relative;
+			background-color: $orangeColor;
+			padding: 15px;
+			flex: 1 1 100%;
+			@media (min-width:$md3+px){
+				//используй их, чтобы скрывать что-то ненужное до определенного момента
+				opacity: 0;
+				visibility: hidden;
+				//----------------//
+				transition: all 0.3s ease 0s;
+				transform: translate(0, 10px);
+				min-width: 200px;
+				position: absolute;
+				left: 0;
+				top: 100%;
+				pointer-events: none;
+				z-index: 5;
+			}
+			@media (max-width:$md3+px){
+				margin: 10px -15px 0px -15px;
+			}
+		}
+}
+.sublist-menu {
+		&__item {
+			&:not(:last-child) {margin: 0px 0px 5px 0px;}
+			@media (max-width:$md3+px){
+				&:not(:last-child) {margin: 0px 0px 10px 0px;}
+			}
+		}
+
+		&__link {
+			color: #fff;
+			line-height: 120%;
+			@media (any-hover: hover){
+				&:hover{
+					text-decoration: underline;
+				}
+			}
+			@media (max-width:$md3+px){
+				font-size: 18px;
+			}
+		}
+}
+.search-form {
+	max-width: 473px;
+	&._active{
+		.search-form__item{
+			opacity: 1;
+			visibility: visible;
+			top: 100%;
+		}
+		.search-form__icon {
+			color: $orangeColor;
+		}
+	}
+		&__icon {
+			position: relative;
+			z-index: 5;
+			font-size: 22px; 
+			color: #262F56;
+			@media (min-width:$md2+px){
+				display: none;
+			}
+		}
+		&__item {
+			display: flex;
+			align-items: center;
+			height: 45px;
+			line-height: 45px;
+			background: #fff;
+			@media (max-width:$md2+px){
+				box-shadow: 0 0 5px rgba(212, 209, 205, 0.3);
+				position: absolute;
+				width: 100%;
+				left: 0;
+				top: -100%;
+				z-index: 5;
+				opacity: 0;
+				visibility: hidden;
+				transition: all 0.3s ease 0s;
+			}
+		}
+		&__btn {
+			flex: 0 0 45px;
+			height: 45px;
+			font-size: 15px;
+			color: #333333;
+		}
+		&__input {
+			width: 100%;
+			font-size: 14px;
+			padding: 0px 20px 0px 0px;
+			color: $darkGrayColor;
+		}
+}
+.actions-header {
+	position: relative;
+	z-index: 5;
+	//!Гриды
+	display: grid;
+	grid-template-columns: auto;
+	/*Алгоритм размещает элементы, заполняя каждый столбец по очереди сверху-вниз, 
+	добавляя новые столбцы по мере необходимости.*/
+	grid-auto-flow: column;//выставит элементы в ряд в независимости от их количества
+	align-items: center;
+	@include adaptiv-value("gap", 32, 16, 1);
+		&__item {
+			&_user {
+				overflow: hidden;
+				border-radius: 50%;
+				@include adaptiv-value("width", 40, 30, 1);
+				@include adaptiv-value("height", 40, 30, 1);
+				img{
+					width: 100%;
+					height: 100%;
+					border-radius: 50%;
+					object-fit: cover;
+				}
+			}
+		}
+}
+.cart-header {
+		&__icon {
+			color: #262F56;
+			font-size: 24px;
+			transition: color 0.3s ease 0s;
+			//?Значения для спана
+			position: relative;
+			display: block;
+			//?
+			@media (any-hover: hover){
+				&:hover{
+					color: $orangeColor;
+				}
+			}
+			span {
+				position: absolute;
+				width: 20px;
+				height: 20px;
+				//?Используй для выравнивания по центру контейнера
+				display: flex;
+				justify-content:center;
+				align-items: center;
+				//?
+				top: -10px;
+				right: -10px;
+				border-radius: 50%;
+				background: $orangeColor;
+				font-size: 12px;
+				color: #fff;
+			}
+		}
+
+		&__body {
+			background: #f4f5f7;
+			border: 1px solid #e0e0e0;
+			position: absolute;
+			top: 60px;
+			right: 0;
+			padding: 15px;
+			width: 300px;
+			z-index: 5;
+			opacity: 0;
+			visibility: hidden;
+			transform: translate(0px,20px);
+			transition: all 0.3s ease 0s;
+			._active &{
+				opacity: 1;
+				visibility: visible;
+				transform: translate(0,0);
+			}
+			@media (max-width:$md2+px){
+				top: 50px;
+			}
+			@media (max-width:$md3+px){
+				position: fixed;
+				top: 50px;
+				left: 0;
+				width: 100%;
+			}
+		}
+
+		&__list {
+		}
+}
+.cart-list {
+	overflow: auto;
+	max-height: 200px;
+	&__image{
+		flex: 0 0 100px;
+		height: 100px;
+	}
+	&__body{
+		flex: 1 1 auto;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 0px 0px 0px 10px;
+	}
+	&__title{
+		color: inherit;
+		font-weight: 600;
+		transition: color 0.3s ease 0s;
+		margin: 0px 0px 5px/16px * 1em 0px;
+		@media (any-hover: hover){
+			&:hover{
+				color: $orangeColor;
+			}
+		}
+	}
+	&__quantity{
+		font-size: 14px;
+		margin: 0px 0px 5px/14px * 1em 0px;
+	}
+	&__delete{
+		color: red;
+		font-size: 14px;
+		@media (any-hover: hover){
+			&:hover{
+				text-decoration: underline;
+			}
+		}
+	}
+	&__item{
+		display: flex;
+		align-items: flex-start;
+		&:not(:last-child) {margin: 0px 0px 15px 0px;}
+	}
+}
+.like-header {
+	&._color{
+		.like-header__icon{
+			color: $orangeColor;
+			&::before{
+				content: '\e904';
+			}
+		}	
+	}
+		&__icon {
+			color: #262F56;
+			font-size: 24px;
+			transition: color 0.3s ease 0s;
+			//?Значения для спана
+			position: relative;
+			display: block;
+			//?
+			@media (any-hover: hover){
+				&:hover{
+					color: $orangeColor;
+				}
+			}
+		}
+
+		&__body {
+			background: #f4f5f7;
+			border: 1px solid #e0e0e0;
+			position: absolute;
+			top: 60px;
+			right: 0;
+			padding: 15px;
+			width: 300px;
+			z-index: 5;
+			opacity: 0;
+			visibility: hidden;
+			transform: translate(0px,20px);
+			transition: all 0.3s ease 0s;
+			._active &{
+				opacity: 1;
+				visibility: visible;
+				transform: translate(0,0);
+			}
+			@media (max-width:$md2+px){
+				top: 50px;
+			}
+			@media (max-width:$md3+px){
+				position: fixed;
+				top: 50px;
+				left: 0;
+				width: 100%;
+			}
+		}
+}
+.like-list {
+	overflow: auto;
+	max-height: 200px;
+	&__image{
+		flex: 0 0 100px;
+		height: 100px;
+	}
+	&__body{
+		flex: 1 1 auto;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 0px 0px 0px 10px;
+	}
+	&__title{
+		color: inherit;
+		font-weight: 600;
+		transition: color 0.3s ease 0s;
+		margin: 0px 0px 5px/16px * 1em 0px;
+		@media (any-hover: hover){
+			&:hover{
+				color: $orangeColor;
+			}
+		}
+	}
+	&__delete{
+		color: red;
+		font-size: 14px;
+		@media (any-hover: hover){
+			&:hover{
+				text-decoration: underline;
+			}
+		}
+	}
+	&__item{
+		display: flex;
+		align-items: flex-start;
+		&:not(:last-child) {margin: 0px 0px 15px 0px;}
+	}
+}
+.icon-menu {
+	display: none;
+	@media (max-width: $md3+px) {
+		@include adaptiv-value("margin-left", 32, 15, 1);
+		position: relative;
+		display: block;
+		flex: 0 0 30px;
+		height: 18px;
+		cursor: pointer;
+		z-index: 5;
+		span {
+			transition: all 0.3s ease 0s;
+			top: calc(50% - 1px);
+			left: 0px;
+			position: absolute;
+			width: 100%;
+			height: 2px;
+			background-color: #000;
+			&:first-child {
+				top: 0px;
+			}
+			&:last-child {
+				top: auto;
+				bottom: 0px;
+			}
+		}
+		&._active {
+			span {
+				transform: scale(0);
+				&:first-child {
+					transform: rotate(-45deg);
+					top: calc(50% - 1px);
+				}
+				&:last-child {
+					transform: rotate(45deg);
+					bottom: calc(50% - 1px);
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,204 @@
+//<ОСНОВНОЙ БЛОК>====================================================================================================
+.logo {
+	@include adaptiv-value("font-size", 24, 20, 1);
+	line-height: 29 / 24 * 100%;
+	font-weight: 700;
+	color: #000000;
+}
+.footer-title {
+	@extend .logo;
+}
+.title {
+	@include adaptiv-value("font-size", 40, 24, 1);
+	font-weight: 700;
+	line-height: 120%;
+	text-align: center;
+}
+._flyImage._ibg{
+	opacity: 1;
+	position: fixed;
+	z-index: 100;
+	transition: all 1s ease 0s;
+}
+.slider-arrows {
+	display: grid;
+	grid-template-columns: repeat(2, 48px);
+	column-gap: 8px;
+}
+.slider-arrow {
+	pointer-events: auto;
+	border-radius: 50%;
+	height: 48px;
+	background: rgba(232,159,113,0.3);
+	color: $orangeColor;
+	font-size: 12px;
+	cursor: pointer;
+	transition: all 0.3s ease 0s;
+		&_prev {
+		}
+		&_next {
+			&::before{
+				transform: rotate(180deg);
+			}
+		}
+	@media (any-hover: hover){
+		&:hover{
+			background: rgba(232,159,113, 1);
+			color: #fff;
+		}
+	}
+	&_white{
+		box-shadow: 0px 4px 14px 1px rgba(0, 0, 0, 0.16);
+		background: #fff;
+		@media (any-hover: hover){
+			&:hover{
+				background: $orangeColor;
+				color: #fff;
+			}
+		}
+	}
+}
+.swiper-pagination-bullets{
+	display: flex;
+	flex-wrap: wrap;//вдруг слайдов будет слишком до хрена
+}
+.swiper-pagination-bullet{
+	flex: 0 0 27px;
+	height: 27px;
+	display: flex; 
+	justify-content:center;
+	align-items: center;
+	position: relative;
+	cursor: pointer;
+	margin: 2px 0;
+	&:not(:last-child) {
+		margin-right: 12px;
+	}
+	&::after{
+		content: "";
+		width: 11px;
+		height: 11px;
+		background: #D8D8D8;
+		border-radius: 50%;
+		transition: all 0.3s ease 0s;
+	}
+	&::before{
+		content:'';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		border: 1px solid $orangeColor;
+		transition: transform 0.3s ease 0s;
+		transform: scale(0);
+	}
+}
+.swiper-pagination-bullet-active{
+	&::after{
+		background: $orangeColor;
+	}
+	&::before {
+		transform: scale(1);
+	}
+}
+.actions-products-button{
+	display: flex;
+	align-items: center;
+	color: inherit;
+	font-weight: 600;
+	transition: color 0.3s ease 0s;
+		&::before{
+			margin: 0px 10px 0px 0px;
+			font-size: 16px;
+		}
+		@media (any-hover: hover){
+			color: #fff;
+				&:hover{
+					color: $orangeColor;
+				}
+		}
+}
+//</ОСНОВНОЙ БЛОК>====================================================================================================
+
+//<ГОТОВЫЕ КЛАССЫ>========================================================================================================================================================================================================
+._ibg {
+	position: relative;
+	img {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		object-fit: cover;
+	}
+}
+body.ie {
+	._ibg {
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+	._ibg img {
+		width: 0;
+		height: 0;
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+//====================================================================================================
+._tabs {
+}
+._tabs-item {
+}
+._tabs-block {
+	display: none;
+	&._active {
+		display: block;
+	}
+}
+//========================================================================================================================================================
+._swiper {
+	overflow: hidden;
+	//.swiper-wrapper
+	.swiper-wrapper {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		box-sizing: content-box;
+		display: flex;
+		transition-property: transform;
+	}
+	&.swiper-vertical {
+		.swiper-wrapper {
+			flex-direction: column;
+		}
+	}
+	&.swiper-autoheight {
+		.swiper-wrapper {
+			align-items: flex-start;
+		}
+	}
+}
+.swiper-initialized {
+	.swiper-slide {
+		flex-shrink: 0;
+		transition-property: transform;
+	}
+}
+.swiper-android .swiper-slide,
+.swiper-wrapper {
+	transform: translate3d(0px, 0, 0);
+}
+.swiper-button-lock {
+	display: none;
+}
+.swiper-pagination-fraction,
+.swiper-pagination-custom,
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+	width: 100%;
+}
+//========================================================================================================================================================
+//</ГОТОВЫЕ КЛАССЫ>====================================================================================================

@@ -1,0 +1,949 @@
+@use "sass:math";
+//<МИКСИНЫ>===============================================================================================
+@import "mixins";
+//</МИКСИНЫ>===============================================================================================
+
+//<ШРИФТЫ>===============================================================================================
+
+//<Подключаем шрифты>=======================================================================================
+@import "fonts";
+//</Подключаем шрифты>=======================================================================================
+
+//<Иконочные шрифты>==========================================================================================
+@import "icons";
+//</Иконочные шрифты>==========================================================================================
+
+//<Шрифт по умолчанию>==========================================================================================
+$fontFamily: "Gilroy";
+$fontSize: 16;
+//</Шрифт по умолчанию>==========================================================================================
+
+//</ШРИФТЫ>=======================================================================================================
+
+//<ПЕРЕМЕННЫЕ>==========================================================================================================
+$minWidth: 320px;
+$maxWidth: 1440;//ширина полотна
+$maxWidthContainer: 1270; //ширина ограничивающего контейнера + 30px
+$md1: $maxWidthContainer + 12;
+$md2: 991.98;
+$md3: 767.98;
+$md4: 479.98;
+
+$mainColor: #3A3A3A;
+$orangeColor: #E89F71;
+$grayColor: #898989;
+$darkGrayColor: #616161;
+//</ПЕРЕМЕННЫЕ>===========================================================================================================
+
+//<ОБНУЛЕНИЕ, ОБЩИЕ ПАРАМЕТРЫ>===============================================================================================
+@import "null";
+body {
+	color: $mainColor;
+	&._lock {
+		overflow: hidden;
+	}
+}
+//</ОБНУЛЕНИЕ, ОБЩИЕ ПАРАМЕТРЫ>===============================================================================================
+
+//<ОБОЛОЧКА>===========================================================================================================
+.wrapper {
+	width: 100%;
+	min-height: 100%;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	&._loaded {
+	}
+}
+//</ОБОЛОЧКА>===========================================================================================================
+
+//<ОСНОВНАЯ СЕТКА>===========================================================================================================
+._container {
+	max-width: $maxWidthContainer + px;
+	margin: 0 auto;
+	padding: 0 15px;
+}
+//</ОСНОВНАЯ СЕТКА>===========================================================================================================
+
+//<ПОДКЛЮЧЕНИЕ ФАЙЛОВ UI СТИЛЕЙ, ФОРМ И ГОТОВЫХ КЛАССОВ>====================================================================================================
+@import "forms";
+@import "ui";
+//</ПОДКЛЮЧЕНИЕ ФАЙЛОВ UI СТИЛЕЙ, ФОРМ И ГОТОВЫХ КЛАССОВ>====================================================================================================
+
+//<ПОДКЛЮЧЕНИЕ ФАЙЛОВ СТИЛЕЙ СТРАНИЦ И ЭЛЕМЕНТОВ>====================================================================================================
+@import "lightgallery";//!чтобы сделать галерею
+@import "popup";
+@import "header";
+@import "footer";
+//</ПОДКЛЮЧЕНИЕ ФАЙЛОВ СТИЛЕЙ СТРАНИЦ И ЭЛЕМЕНТОВ>====================================================================================================
+
+//<ОСНОВНОЙ БЛОК>====================================================================================================
+/*
+.page {
+	flex: 1 1 auto;
+	&__main-slider {
+	}
+	&__advantages {
+	}
+	&__products {
+	}
+	&__rooms {
+	}
+	&__tips {
+	}
+	&__furniture {
+	}
+}*/
+//===================================================================================================================================
+.main-slider {	
+	background: #FCF8F3;
+		&__container {
+			position: relative;
+			@media (min-width:$md2+px){
+				&::before{
+					content:'';
+					position: absolute;
+					top: 0;
+					width: 100vw;
+					right: 376px;
+					height: 100%;
+					background: #F9F1E7;
+				}
+			}
+		}
+
+		&__body {
+			padding: 140px 0px 0px 0px;
+			position: relative;
+			z-index: 2;
+			@media (max-width:$md2+px){
+				padding: 80px 0px 0px 0px;
+			}
+			@media (max-width:$md3+px){
+				padding: 50px 0px 0px 0px;
+			}
+			@media (min-width:$md2+px){
+				display: flex;
+			}
+		}
+
+		&__content {
+			flex: 0 0 494/1240 * 100%;
+			@include adaptiv-value("margin-bottom", 80, 15, 1);
+			align-self: flex-start;
+			@media (max-width:$md2+px){
+				margin: 0px -15px;
+			}
+		}
+
+		&__slider {
+			flex: 1 1 auto;
+			//!чтобы не болел слайдер когда он во флекс элементе или сам флекс элемент
+			min-width: 0;
+			align-self: flex-end;
+			@media (min-width:$md2+px){
+				padding: 0px 0px 0px 32px;
+			}
+		}
+}
+.content-main {
+	position: relative;
+	z-index: 5;
+	padding-left: 15px;
+	padding-right: 15px;
+	@include adaptiv-value("padding-top", 60, 15, 1);
+	@include adaptiv-value("padding-bottom", 60, 15, 1);
+	background: rgba(255, 255, 255, 0.9);
+	@supports ((-webkit-backdrop-filter: blur(31px)) or (backdrop-filter: blur(31px))) {
+		background: rgba(255, 255, 255, 0.72);
+		backdrop-filter: 31px;
+	}
+	@media (min-width:$md2+px){
+		@include adaptiv-value("padding", 60, 1, 1);
+	}
+		&__title {
+			@include adaptiv-value("font-size", 56, 24, 1);
+			line-height: 120%;
+			font-weight: 700;
+			//!делим сам отступ на размер шрифта и умнажаем на 1em, чтобы отсутуп зависил от размера шрифта
+			&:not(:last-child) {margin: 0px 0px 16/56*1em 0px;}
+		}
+
+		&__text {
+			@include adaptiv-value("font-size", 20, 16, 1);
+			color: $grayColor;
+			font-weight: 500;
+			line-height: 150%;
+			&:not(:last-child) {margin: 0px 0px 48/20*1em 0px;}
+		}
+
+		&__button {
+			width: 100%;
+			@include adaptiv-value("min-height", 78, 45, 1);
+			@include adaptiv-value("font-size", 20, 16, 1);
+		}
+}
+.slider-main {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	@media (max-width:$md2+px){
+		align-items: stretch;
+		flex-direction: column-reverse;
+	}
+		&__controls {
+			align-self: stretch;
+			margin: 0px 0px 20px 0px;
+			@media (max-width:$md2+px){
+				margin: 10px 0px 20px 0px;
+			}
+		}
+
+		&__body {
+			overflow: visible;
+			@media (min-width:$md2+px){
+				@include adaptiv-value("width", 934, 290, 1);
+			}
+			@media (max-width:$md2+px){
+				margin: 0px -15px;
+			}
+		}
+
+		&__slide {
+			position: relative;
+		}
+
+		&__image {
+			user-select: none;
+			padding: 0px 0px 59.1% 0px;
+		}
+
+		&__content {
+			min-width: 295px;
+			max-height: 300px;
+			overflow: auto;
+			color: inherit;
+			display: flex;
+			flex-direction: column;
+			@include adaptiv-value("padding", 24, 15, 1);
+			background: rgba(255, 255, 255, 0.9);
+			@media (min-width:$md3+px){
+				position: absolute;
+				min-width: 350px;
+				@include adaptiv-value("bottom", 40, 0, 1);
+				@include adaptiv-value("right", 40, 0, 1);
+			}
+			@supports ((-webkit-backdrop-filter: blur(31px)) or (backdrop-filter: blur(31px))) {
+				background: rgba(255, 255, 255, 0.72);
+				backdrop-filter: blur(32px);
+			}
+			
+		}
+
+		&__title {
+			@include adaptiv-value("font-size", 28, 22, 1);
+			font-weight: 600; 
+			line-height: 120%;
+			&:not(:last-child) {margin: 0px 0px 4/28 * 1em 0px;}
+		}
+
+		&__text {
+			line-height: 150%;
+			color: $grayColor;
+			&:not(:last-child) {margin: 0px 0px 8/16 * 1em 0px;}
+		}
+
+		&__price {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-direction: row-reverse;
+			font-weight: 600;
+			line-height: 150%;
+			@include adaptiv-value("font-size", 20, 16, 1);
+			&::before{
+				margin: 0px 0px 0px 10px;
+				font-size: 12px;
+			}
+		}
+}
+.controls-slider-main {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+		&__dotts {
+			@media (max-width:$md2+px){
+				justify-content: center;
+			}
+		}
+		@media (min-width:$md2+px){
+			padding: 0px 20px 0px 0px;
+		}
+		&__arrows {
+			@media (max-width:$md2+px){
+				display: none;
+			}
+		}
+}
+//========================================================================================================================================================
+.advantages {
+	@include adaptiv-value("padding-top", 88, 30, 1);
+	@include adaptiv-value("padding-bottom", 88, 30, 1);
+		&__container {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		}
+
+		&__item {
+			display: inline-grid;
+			padding: 15px 0;
+			//Сразу и ряды и колонки
+			grid-template: auto auto / 85px 1fr;
+			@media (max-width:$md2+px){
+				min-width: 280px; 
+			}
+			@media (max-width:$md3+px){
+				grid-template: auto auto / auto 1fr;
+			}
+		}
+
+		&__icon {
+			text-align: center;
+			align-self: center;
+			//Позволяем занять 2 строки
+			grid-row: span 2;
+			@media (max-width:$md3+px){
+				padding: 0px 15px 0px 0px;
+			}
+		}
+
+		&__title {
+			font-weight: 600;
+			font-size: 18px;
+			line-height: 150%;
+			margin: 0px 0px 2/18 * 1em 0px;
+		}
+
+		&__text {
+			line-height: 150%;
+			color: $grayColor;
+		}
+}
+//========================================================================================================================================================
+.products {
+	@include adaptiv-value("padding-bottom", 44, 30, 1);
+		&__container {
+		}
+		&__title {
+			&:not(:last-child) {margin: 0px 0px 32/40 * 1em 0px;}
+		}
+
+		&__items {
+			display: grid;
+			//очень круто так строить для адаптива, чтобы при уменьшении экрана всё перескакивало
+			//и заполнялось на всю строку
+			grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+			gap: 32px;
+		}
+
+		&__item {
+		}
+		&__footer{
+			padding: 32px 0px 0px 0px;
+			text-align: center;
+		}
+		&__more{
+			border: 1px solid $orangeColor;
+			min-width: 245px;
+			&._hold{
+				opacity: 0.4;
+				cursor: default;
+			}
+		}
+}
+.item-products {
+	background: #f0eeee;
+	//чтобы классно отображалось при изменении контента карточки
+	display: flex;
+	flex-direction: column;
+	//========================================================================================================================================================
+	position: relative;
+	@media (any-hover: hover){
+		&:hover{
+			.item-products__actions{
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+	}
+		&__labels {
+			position: absolute;
+			z-index: 2;
+			display: flex;
+			flex-direction: column;
+			@include adaptiv-value("top", 24, 10, 1);
+			@include adaptiv-value("right", 24, 10 , 1);
+		}
+
+		&__label {
+			flex: 0 0 48px;
+			width: 48px;
+			border-radius: 50%;
+			display: flex;
+			justify-content:center;
+			align-items: center;
+			color: #fff;
+			font-weight: 500;
+			&:not(:last-child) {margin: 0px 0px 10px 0px;}
+			&_sale {
+				background: #E97171;
+			}
+			&_new{
+				background: #2ec1ac;
+			}
+		}
+
+		&__image {
+			padding: 0px 0px 310/285*100% 0px;
+		}
+
+		&__body {
+			flex: 1 1 auto;//цена к низу так будет прижиматься
+			padding: 16px 16px 30px 16px;
+			display: flex;
+			flex-direction: column;
+		}
+
+		&__content {
+			flex: 1 1 auto;
+		}
+
+		&__title {
+			@include adaptiv-value("font-size", 24, 20, 1);
+			font-weight: 600;
+			line-height: 120%;
+			margin: 0px 0px 8px/24px * 1em 0px;
+		}
+
+		&__text {
+			color: $grayColor;
+			line-height: 150%;
+			margin: 0px 0px 8px/24px * 1em 0px;
+		}
+
+		&__prices {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			line-height: 150%;
+		}
+
+		&__price {
+			@include adaptiv-value("font-size", 20, 16, 1);
+			font-weight: 600;
+			&_old {
+				@include adaptiv-value("font-size", 16, 14, 1);
+				font-weight: normal;
+				margin: 0px 0px 0px 16px;//отступ безопасности
+				color: #B0B0B0;
+				text-decoration: line-through; 
+			}
+		}
+
+		&__actions {
+			position: relative;
+			@media (any-hover: none){
+				padding: 15px 0px 0px 0px;
+			}
+			@media (any-hover: hover){
+				opacity: 0;
+				visibility: hidden;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				justify-content:center;
+				align-items: center;
+				background: rgba(58, 58, 58, 0.74);
+				z-index: 3;
+				transition: all 0.3s ease 0s;
+			}
+		}
+}
+.actions-products {
+
+		&__body {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+
+		&__cart {
+			flex: 1 1 100%;
+			&:not(:last-child) {margin: 0px 0px 24px 0px;}
+			&._hold{
+				opacity: 0.4;
+				cursor: default;
+			}
+		}
+		&__like{
+			&._liked {
+				color: $orangeColor;
+					&::before{
+						content: '\e904';
+					}
+			}	
+		}
+}
+.share-product{
+	cursor: pointer;
+	&._active{
+		.share-product__links{
+			transform: translate(0, 0);
+			opacity: 1;
+			visibility: visible;
+		}
+		.share-product__button{
+			color: $orangeColor;
+		}
+	}
+	&__links{
+		opacity: 0;
+		visibility: hidden;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		position: absolute;
+		bottom: 16%;
+		transition: all 0.3s ease 0s;
+		transform: translate(0px, -200%);
+		@media (any-hover: none){
+			background: rgba(58, 58, 58, 0.74);
+			padding: 16px;
+			margin-bottom: 16px;
+		}
+	}
+}
+.share-product-links{
+	&__item{
+		display: flex;
+		font-size: 20px;
+		color: #fff;
+		transition: color 0.3s ease 0s;
+		&:not(:last-child) {margin: 0px 0px 10px 0px;}
+		&::before{
+			margin-right: 8px;
+		}
+		@media (any-hover: hover){
+			&:hover{
+				color: $orangeColor;
+			}
+		}
+	}
+}
+//========================================================================================================================================================
+.rooms {
+	background: #FCF8F3;
+	@include adaptiv-value("padding-top", 44, 30, 1);
+	@include adaptiv-value("padding-bottom", 44, 30, 1);
+		&__container {
+			//Сразу думаем про адаптив
+			@media (min-width:$md2+px){
+				display: flex;
+			}
+		}
+		&__body {
+			//так ширина будет адаптивиться и нам не надо ставить 1 1 во flex
+			flex: 0 0 465 / 1240 * 100%;
+			//Нельзя сделать z-index не отпозиционированному элементу
+			//Ставим z-index, чтобы контент был виден над плашкой
+			position: relative;
+			z-index: 5;
+			//Центрируем блок по вертикали
+			align-self: center;
+			//Сразу думаем про адаптив
+			@media (min-width:$md2+px){
+				//Делаем отступ от слайдера справа как в макете
+				@include adaptiv-value("padding-right", 80, 30, 1);
+			}
+			@media (max-width:$md2+px){
+				margin: 0px 0px 30px 0px;
+			}
+		}
+
+		&__slider {
+			flex: 1 1 auto;
+			//Чтобы не болел
+			min-width: 0;
+			//Прибиваем вверх в независимости от контента .rooms-body
+			align-self: flex-start;
+			@media (max-width:$md4+px){
+				margin: 0 -15px;
+			}
+		}
+}
+.body-rooms {
+		&__title {
+			//Отступ вниз будет применяться, только если не является последним элементом
+			&:not(:last-child) {
+				//!Думай об адаптиве
+				//Отступ вниз будет меняться вместе с размером шрифта
+				margin: 0px 0px 8px/40px * 1em 0px;
+			}
+			//Исправляем позиционирование по центру по умолчанию из блока .title
+			text-align: left;
+		}
+		&__text {
+			line-height: 150%;
+			font-weight: 500;
+			color: $darkGrayColor;
+			//Отступ вниз будет применяться, только если не является последним элементом
+			&:not(:last-child) {margin: 0px 0px 24px 0px;}
+		}
+		&__button {
+			//используй такую ширину вместо фиксированной
+			min-width: 176px;
+		}
+}
+.slider-rooms {
+	//user-select: none;
+	position: relative;
+		&__arrows {
+			pointer-events: none;
+			width: calc(100% - 48px);
+			position: absolute;
+			top: 50%;
+			transform: translate(0px, -50%);
+			left: 24px;
+			justify-content: space-between;
+			z-index: 5;
+			@media (min-width:$md1+px){
+				left: -24px;
+				width: calc(100% + 48px);
+			}
+		}
+		&__body {
+			//swiper по умолчанию в ui.css overflow: hidden, 
+			//а мы делаем видимыми слайды за пределами слайдера
+			overflow: visible;
+			//Делаем плашку с фоном для слайдера 
+			position: relative;
+			&::before{
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 100%;
+				width: 100vw;
+				background: #FCF8F3;
+				z-index: 2;
+				transform: translate(-100%,0px);
+			}
+		}
+		&__slide {
+			width: 372px;
+			position: relative;//для позиционирования контента внутри
+			overflow: hidden;//для позиционирования контента внутри
+			@include adaptiv-value("min-height", 585, 400, 1);
+			//ищем внутри активный слайд
+			&.swiper-slide-active{
+				//картинке внутри активного слайда задаём высоту 100%
+				.slide-slider-rooms__image{
+					height: 100%;
+				}
+			}
+			@media (max-width:$md4+px){
+				width: 100%;
+			}
+		}
+		
+		&__dotts {
+			@media (min-width:$md3+px){
+				position: absolute;
+				bottom: 30px;
+				left: 396px;
+			}
+			@media (max-width:$md3+px){
+				justify-content: center;
+				padding: 15px 0px 0px 0px;
+			}
+		}
+}
+.slide-slider-rooms {
+		&__image {
+			height: 100%;
+			transition: height 0.8s ease 0s;
+			//здесь делаем mobile first, т.к потом будет менятся структура слайдера
+			@media (min-width:$md3+px){
+				height: 83%;
+			}
+		}
+		&__content{	
+			position: absolute;
+			max-width: 240px;
+			@include adaptiv-value("left", 24, 15, 1);
+			@include adaptiv-value("bottom", 24, 15, 1);
+			@include adaptiv-value("padding", 32, 15, 1);
+			background: rgba(255, 255, 255, 0.9);
+			@supports ((-webkit-backdrop-filter: blur(32px)) or (backdrop-filter: blur(32px))) {
+				background: rgba(255, 255, 255, 0.72);
+				backdrop-filter: blur(32px);
+			}
+			&::before{
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				transform: translate(100%,0px);//так мы выдвигаем стрелку за пределы блока
+				width: 48px;
+				height: 48px;
+				background: $orangeColor;
+				color: #fff;
+				display: flex;
+				justify-content:center;
+				align-items: center;
+			}
+		}
+		&__label{	
+
+		}
+		&__title{
+			font-weight: 600;
+			@include adaptiv-value("font-size", 28, 24, 1);
+			color: $mainColor;
+			line-height: 120%;
+		}
+}
+.label-slide-slider-rooms {
+	display: grid;
+	grid-template-columns: auto 27px auto;
+	align-items: center;
+	justify-content: start;
+	gap: 8px;
+	color: $darkGrayColor;
+	font-weight: 500;
+	&:not(:last-child) {margin: 0px 0px 8px 0px;}
+
+		&__number {
+		}
+
+		&__line {
+			height: 1px;
+			background: $darkGrayColor;
+		}
+
+		&__text {
+		}
+}
+//========================================================================================================================================================
+.tips {
+	@include adaptiv-value("padding-top", 44, 30, 1);
+	@include adaptiv-value("padding-bottom", 44, 30, 1);
+		&__container {
+		}
+
+		&__title {
+		
+		}
+
+		&__slider {
+		}
+}
+.slider-tips {
+	position: relative;
+		&__body {
+			@include adaptiv-value("margin-left", -32, -15, 1);
+			@include adaptiv-value("margin-right", -32, -15, 1);
+			@include adaptiv-value("padding", 32, 15, 1);
+		}
+
+		&__slide {
+			display: flex;
+			flex-direction: column;
+			transition: box-shadow 0.3s ease 0s;
+			@media (any-hover: hover){
+				&:hover{
+					box-shadow: 0 0 32px rgba(97, 97, 97, 0.5);
+				}
+			}
+		}
+
+		&__arrows {
+			pointer-events: none;
+			width: calc(100% - 48px);
+			position: absolute;
+			top: 50%;
+			left: 24px;
+			transform: translate(0px, -50%);
+			justify-content: space-between;
+			z-index: 5;
+			@media (min-width:$md1+px){
+				left: -24px;
+				width: calc(100% + 48px);
+			}
+			@media (max-width:$md3+px){
+				display: none;
+			}
+		}
+		
+
+		&__dotts {
+			@include adaptiv-value("padding-top", 8, 0, 1);
+			justify-content: center;
+		}
+}
+.slide-slider-tips {
+
+		&__image {
+			padding: 0px 0px 251/391 * 100% 0px;
+		}
+
+		&__content {
+			display: flex;
+			flex-direction: column;
+			flex: 1 1 auto;
+			align-items: flex-start;
+			padding: 15px;
+		}
+
+		&__title {
+			flex: 1 1 auto;
+			&:not(:last-child) {margin: 0px 0px 8px/24px * 1em 0px;}
+			color: inherit;
+			font-weight: 600;
+			line-height: 120%;
+			@include adaptiv-value("font-size", 24, 18, 1);
+			transition: all 0.3s ease 0s;
+			@media (any-hover: hover){
+				&:hover{
+					color: $orangeColor;
+				}
+			}
+		}
+
+		&__date {
+			color: $grayColor;
+			font-size: 14px;
+			line-height: 150%;
+		}
+}
+//========================================================================================================================================================
+.furniture {
+	@include adaptiv-value("padding-bottom", 85, 40, 1);
+		&__container {
+		}
+
+		&__label {
+			text-align: center;
+			color: $darkGrayColor;
+			line-height: 150%;
+			font-weight: 600;
+			@include adaptiv-value("font-size", 20, 16, 1);
+			&:not(:last-child) {margin: 0px 0px 8px/20px * 1em 0px;}
+		}
+
+		&__title {
+			&:not(:last-child) {margin: 0px 0px 32px/40px * 1em 0px;}
+		}
+
+		&__body {
+			position: relative;
+			@media (any-hover:none){
+				overflow: auto;
+				-webkit-overflow-scrolling: touch;
+			}
+		}
+
+		&__items {
+			display: grid;
+			grid-template-columns: auto;
+			grid-auto-flow: column;
+			align-items: center;
+			gap: 16px;
+			@media (any-hover: hover){
+				justify-content: center;
+			}
+		}
+
+		&__column {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			margin: 0px -8px;
+			&:first-child{
+				justify-content: flex-end;
+			}
+		}
+
+		&__row {
+			display: inline-grid;
+			padding: 0 8px;
+			gap: 16px;
+			grid-template-columns: auto;
+			grid-auto-flow: column;
+			&:not(:last-child) {margin: 0px 0px 16px 0px;}
+		}
+}
+.row-furniture {
+
+		&_left-top {
+			justify-content: end;
+			align-items: end;
+		}
+
+		&_left-bottom {
+			justify-content: end;
+			align-items: start;
+		}
+
+		&_center {
+			display: block;
+		}
+
+		&_right-top {
+			align-items: end;
+		}
+
+		&_right-bottom {
+			align-items: start;
+		}
+
+		&__item {
+			@media (any-hover: hover){
+				img {
+					transition: all 0.8s ease 0s;
+					filter: grayscale(1);
+				}
+				&:hover{
+					img {
+						filter: grayscale(0);
+					}
+				}
+			}
+		}
+}
+//</ОСНОВНОЙ БЛОК>====================================================================================================
+.page-404 {
+		&__content {
+
+		}	
+}
+.content-404{
+	padding-top: 140px;
+	@include adaptiv-value("padding-bottom", 60, 15, 1);
+	@media (max-width:$md2+px){
+		padding-top: 80px;
+	}
+	@media (max-width:$md3+px){
+		padding-top: 50px;
+	}
+	&__title{
+		&:not(:last-child) {margin: 0px 0px 30/40 * 1em 0px;}
+	}
+	&__button{
+		text-align: center;
+	}
+}
+

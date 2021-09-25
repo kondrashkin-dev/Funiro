@@ -1,0 +1,80 @@
+<header class="header">
+	<div class="header__wrapper">
+		<!--Нужен для плавающей шапки-->
+		<div class="header__container _container">
+			<div class="header__body">
+				<div class="header__main">
+					<a href="index.html" class="header__logo logo">Funiro.</a>
+					<div class="header__menu menu">
+					<!--!эта обёртка нужна, чтобы в ней показывалось содержимое меню на мобилках-->
+						<nav class="menu__body">
+							<!--!Здесь делаем спойлеры на мобилках, так и пишем ширину и когда-->
+							<ul data-spollers="768,max" class="menu__list">
+								<li class="menu__item">
+									<a href="404.html" class="menu__link">Products</a>
+									<button data-spoller type="button" class="menu__arrow _icon-arrow"></button>
+									<ul class="menu__sublist sublist-menu">
+										<li class="sublist-menu__item">
+											<a href="404.html" class="sublist-menu__link">Product #1</a>
+										</li>
+										<li class="sublist-menu__item">
+											<a href="404.html" class="sublist-menu__link">Product #2</a>
+										</li>
+										<li class="sublist-menu__item">
+											<a href="404.html" class="sublist-menu__link">Product #3</a>
+										</li>
+									</ul>
+								</li>
+								<li class="menu__item">
+									<a href="404.html" class="menu__link">Rooms</a>
+									<button data-spoller type="button" class="menu__arrow _icon-arrow"></button>
+									<ul class="menu__sublist sublist-menu">
+										<li class="sublist-menu__item">
+											<a href="404.html" class="sublist-menu__link">Room #1</a>
+										</li>
+										<li class="sublist-menu__item">
+											<a href="404.html" class="sublist-menu__link">Room #2</a>
+										</li>
+										<li class="sublist-menu__item">
+											<a href="404.html" class="sublist-menu__link">Room #3</a>
+										</li>
+									</ul>
+								</li>
+								<li class="menu__item">
+									<a href="404.html" class="menu__link">Inspirations</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<div class="header__search">
+					<div class="search-form">
+						<button type="button" class="search-form__icon _icon-search"></button>
+						<form action="#" class="search-form__item">
+							<button type="submit" class="search-form__btn _icon-search"></button>
+							<input autocomplete="off" type="text" name="form[]" data-value="Search for minimalist chair"
+								class="search-form__input">
+						</form>
+					</div>
+				</div>
+				<div class="header__actions actions-header">
+					<div class="actions-header__item like-header">
+						<a href="" class="like-header__icon _icon-like"></a>
+						<div class="like-header__body">
+							<ul class="like-header__list like-list"></ul>
+						</div>
+					</div>
+					<div class="actions-header__item cart-header">
+						<a href="" class="cart-header__icon _icon-cart"></a>
+						<div class="cart-header__body">
+							<ul class="cart-header__list cart-list"></ul>
+						</div>
+					</div>
+					<a href="404.html" class="actions-header__item actions-header__item_user _ibg">
+						<img src="img/avatar.jpg" alt="Avatar">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
